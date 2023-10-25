@@ -1,7 +1,7 @@
 package com.agalobr.superheroe.features
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.agalobr.superheroe.R
 
 class MainActivity : AppCompatActivity() {
