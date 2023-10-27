@@ -13,7 +13,7 @@ class SuperHeroesDataRemoteSource(private val apiClient: ApiClient) :
     override suspend fun getSuperHeroe(): Either<ErrorApp, List<SuperHeroe>> {
         return try {
             if (apiClient.getSuperHeroes().isSuccessful) {
-                apiClient.getSuperHeroes().body()!!.map { superHeroesApiModel ->
+                apiClient.getSuperHeroes().body()!!.subList(0, 100).map { superHeroesApiModel ->
                     superHeroesApiModel.toDomain()
                 }.right()
             } else {
