@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin">10dp</dimen>
+    <dimen name="margin_S">6dp</dimen>
+    <dimen name="name_Text">25sp</dimen>
+    <dimen name="fullName_Text">15sp</dimen>
+    <dimen name="card_Radius">6dp</dimen>
+</resources>
