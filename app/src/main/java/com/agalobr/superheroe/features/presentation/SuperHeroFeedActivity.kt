@@ -10,7 +10,7 @@ import com.agalobr.superheroe.app.extensions.GsonSerialization
 import com.agalobr.superheroe.app.extensions.errorDatabase
 import com.agalobr.superheroe.app.extensions.errorInternet
 import com.agalobr.superheroe.app.extensions.errorUnknown
-import com.agalobr.superheroe.databinding.ActivityMainBinding
+import com.agalobr.superheroe.databinding.ActivitySuperheroFeedBinding
 import com.agalobr.superheroe.features.data.ApiClient
 import com.agalobr.superheroe.features.data.biography.BiographyDataRepository
 import com.agalobr.superheroe.features.data.biography.local.XmlBiographyLocalDataSource
@@ -26,9 +26,9 @@ import com.agalobr.superheroe.features.presentation.adapter.SuperHeroeFeedAdapte
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 
-class MainActivity : AppCompatActivity() {
+class SuperHeroFeedActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivitySuperheroFeedBinding
 
     private val skeleton: Skeleton by lazy {
         binding.listSuperHeroe.applySkeleton(R.layout.view_superhero_feed_item, 10)
@@ -40,16 +40,16 @@ class MainActivity : AppCompatActivity() {
         SuperHeroFeedViewModel(
             SuperHeroesFeedUseCase(
                 WorkDataRepository(
-                    XmlWorkLocalDataSource(this@MainActivity, GsonSerialization()),
+                    XmlWorkLocalDataSource(this@SuperHeroFeedActivity, GsonSerialization()),
                     WorkDataRemoteSource(ApiClient())
                 ),
                 BiographyDataRepository(
                     BiographyDataRemoteSource(ApiClient()),
-                    XmlBiographyLocalDataSource(this@MainActivity, GsonSerialization())
+                    XmlBiographyLocalDataSource(this@SuperHeroFeedActivity, GsonSerialization())
                 ),
                 SuperHeroeDataRepository(
                     SuperHeroesDataRemoteSource(ApiClient()),
-                    XmlSuperHeroeLocalDataSource(this@MainActivity, GsonSerialization())
+                    XmlSuperHeroeLocalDataSource(this@SuperHeroFeedActivity, GsonSerialization())
                 )
             )
         )
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivitySuperheroFeedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpObserver()
