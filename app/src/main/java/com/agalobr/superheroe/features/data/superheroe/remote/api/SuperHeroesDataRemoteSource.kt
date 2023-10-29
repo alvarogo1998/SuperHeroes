@@ -23,4 +23,16 @@ class SuperHeroesDataRemoteSource(private val apiClient: ApiClient) :
             ErrorApp.InternetErrorApp.left()
         }
     }
+
+    override suspend fun getSuperHeroById(heroId: Int): Either<ErrorApp, SuperHeroe> {
+        return try {
+            if (apiClient.getSuperHeroeById(heroId).isSuccessful) {
+                apiClient.getSuperHeroeById(heroId).body()!!.toDomain().right()
+            } else {
+                ErrorApp.InternetErrorApp.left()
+            }
+        } catch (ex: Exception) {
+            ErrorApp.InternetErrorApp.left()
+        }
+    }
 }
