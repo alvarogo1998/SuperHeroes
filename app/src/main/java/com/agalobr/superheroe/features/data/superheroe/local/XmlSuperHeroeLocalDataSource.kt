@@ -39,4 +39,14 @@ class XmlSuperHeroeLocalDataSource(context: Context, private val serialization: 
             ErrorApp.DatabaseErrorApp.left()
         }
     }
+
+    fun getHeroById(id: Int): Either<ErrorApp, SuperHeroe?> {
+        return try {
+            sharedPref.getString(id.toString(), null).let {
+                serialization.fromJson(it!!, SuperHeroe::class.java)
+            }.right()
+        } catch (ex: Exception) {
+            ErrorApp.DatabaseErrorApp.left()
+        }
+    }
 }

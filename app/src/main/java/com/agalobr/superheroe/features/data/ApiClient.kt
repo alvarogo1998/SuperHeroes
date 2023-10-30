@@ -25,4 +25,10 @@ class ApiClient {
     suspend fun getWork(heroId: Int) = apiService.getSuperHeroeWork(heroId)
 
     suspend fun getSuperHeroes() = apiService.getSuperHeroes()
+
+    suspend fun getSuperHeroeById(heroId: Int) = apiService.getSuperHeroeId(heroId)
+
+    suspend fun getConnections(heroId: Int) = apiService.getSuperHeroeConnections(heroId)
+
+    suspend fun getPowerstats(heroId: Int) = apiService.getSuperHeroePowerstats(heroId)
 }
