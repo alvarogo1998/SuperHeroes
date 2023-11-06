@@ -1,5 +1,6 @@
 package com.agalobr.superheroe.features.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -77,6 +78,9 @@ class SuperHeroFeedActivity : AppCompatActivity() {
                     showError(uiStateSuperHeroFeed.errorApp)
                 } else {
                     superHeroAdapter.setDataItems(uiStateSuperHeroFeed.superHero)
+                    superHeroAdapter.setOnClickDetail {
+                        navigateToDetail(it)
+                    }
                 }
             }
         }
@@ -105,4 +109,10 @@ class SuperHeroFeedActivity : AppCompatActivity() {
     private fun errorDatabase() = binding.viewError.errorDatabase()
 
     private fun errorInternet() = binding.viewError.errorInternet()
+
+    private fun navigateToDetail(id:Int){
+        val intent = Intent(this, SuperHeroFeedDetailActivity::class.java)
+        intent.putExtra("id", id)
+        startActivity(intent)
+    }
 }

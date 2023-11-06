@@ -25,7 +25,7 @@ class SuperHeroFeedDetailUseCase(
             powerstats.speed,
             powerstats.combat,
             connections!!.groupAffiliation,
-            superHero.getUrlImageL(),
+            superHero.getUrlImageXL(),
             superHero.urlImages
         ).right()
     }
