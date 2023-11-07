@@ -1,8 +1,12 @@
 package com.agalobr.superheroe.features.presentation
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.agalobr.superheroe.R
@@ -11,7 +15,7 @@ import com.agalobr.superheroe.app.extensions.GsonSerialization
 import com.agalobr.superheroe.app.extensions.errorDatabase
 import com.agalobr.superheroe.app.extensions.errorInternet
 import com.agalobr.superheroe.app.extensions.errorUnknown
-import com.agalobr.superheroe.databinding.ActivitySuperheroFeedBinding
+import com.agalobr.superheroe.databinding.FragmentSuperheroFeedBinding
 import com.agalobr.superheroe.features.data.ApiClient
 import com.agalobr.superheroe.features.data.biography.BiographyDataRepository
 import com.agalobr.superheroe.features.data.biography.local.XmlBiographyLocalDataSource
@@ -27,9 +31,10 @@ import com.agalobr.superheroe.features.presentation.adapter.SuperHeroeFeedAdapte
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 
-class SuperHeroFeedActivity : AppCompatActivity() {
+class SuperHeroFragment : Fragment() {
 
-    private lateinit var binding: ActivitySuperheroFeedBinding
+    private var _binding: FragmentSuperheroFeedBinding? = null
+    private val binding = _binding!!
 
     private val skeleton: Skeleton by lazy {
         binding.listSuperHeroe.applySkeleton(R.layout.view_superhero_feed_item, 10)
@@ -41,33 +46,38 @@ class SuperHeroFeedActivity : AppCompatActivity() {
         SuperHeroFeedViewModel(
             SuperHeroesFeedUseCase(
                 WorkDataRepository(
-                    XmlWorkLocalDataSource(this@SuperHeroFeedActivity, GsonSerialization()),
+                    XmlWorkLocalDataSource(requireContext(), GsonSerialization()),
                     WorkDataRemoteSource(ApiClient())
                 ),
                 BiographyDataRepository(
                     BiographyDataRemoteSource(ApiClient()),
-                    XmlBiographyLocalDataSource(this@SuperHeroFeedActivity, GsonSerialization())
+                    XmlBiographyLocalDataSource(requireContext(), GsonSerialization())
                 ),
                 SuperHeroeDataRepository(
                     SuperHeroesDataRemoteSource(ApiClient()),
-                    XmlSuperHeroeLocalDataSource(this@SuperHeroFeedActivity, GsonSerialization())
+                    XmlSuperHeroeLocalDataSource(requireContext(), GsonSerialization())
                 )
             )
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySuperheroFeedBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setUpObserver()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSuperheroFeedBinding.inflate(inflater, container, false)
         setUpView()
-        viewModel.loadSuperHero()
-
+        return binding.root
     }
 
-    private fun setUpObserver() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupObservers()
+        viewModel.loadSuperHero()
+    }
+
+    private fun setupObservers() {
         val observer = Observer<SuperHeroFeedViewModel.UiState> { uiStateSuperHeroFeed ->
 
             if (uiStateSuperHeroFeed.isLoading) {
@@ -84,7 +94,7 @@ class SuperHeroFeedActivity : AppCompatActivity() {
                 }
             }
         }
-        viewModel.uiState.observe(this, observer)
+        viewModel.uiState.observe(viewLifecycleOwner, observer)
     }
 
     private fun setUpView() {
@@ -110,9 +120,14 @@ class SuperHeroFeedActivity : AppCompatActivity() {
 
     private fun errorInternet() = binding.viewError.errorInternet()
 
-    private fun navigateToDetail(id:Int){
-        val intent = Intent(this, SuperHeroFeedDetailActivity::class.java)
-        intent.putExtra("id", id)
-        startActivity(intent)
+    private fun navigateToDetail(id: Int) {
+        val result = id
+        (activity as MainActivity).changeFragment(SuperHeroFragmentDetail.newInstance())
+        setFragmentResult("requestKey", bundleOf("bundleKey" to result))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
