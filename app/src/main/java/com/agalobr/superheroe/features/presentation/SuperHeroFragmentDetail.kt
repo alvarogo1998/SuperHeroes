@@ -30,15 +30,13 @@ import com.agalobr.superheroe.features.data.superheroe.local.XmlSuperHeroeLocalD
 import com.agalobr.superheroe.features.data.superheroe.remote.api.SuperHeroesDataRemoteSource
 import com.agalobr.superheroe.features.domain.SuperHeroFeedDetailUseCase
 import com.agalobr.superheroe.features.presentation.adapter.SuperHeroeFeedDetailAdapter
-import com.faltenreich.skeletonlayout.Skeleton
 
 class SuperHeroFragmentDetail : Fragment() {
 
     private var _binding: FragmentSuperheroFeedDetailBinding? = null
-    private val binding = _binding!!
+    private val binding get() = _binding!!
 
     private val superHeroDetailAdapter = SuperHeroeFeedDetailAdapter()
-    private val skeleton: Skeleton? = null
 
     private val viewModel: SuperHeroFeedDetailViewModel by lazy {
         SuperHeroFeedDetailViewModel(
@@ -111,18 +109,11 @@ class SuperHeroFragmentDetail : Fragment() {
         val observer =
             Observer<SuperHeroFeedDetailViewModel.DetailUiState> { uiStateSuperHeroeDetail ->
 
-                if (uiStateSuperHeroeDetail.isLoading) {
-                    skeleton?.showSkeleton()
-
+                if (uiStateSuperHeroeDetail.errorApp != null) {
+                    showError(uiStateSuperHeroeDetail.errorApp)
                 } else {
-                    skeleton?.showOriginal()
-                    if (uiStateSuperHeroeDetail.errorApp != null) {
-                        showError(uiStateSuperHeroeDetail.errorApp)
-                    } else {
-                        skeleton?.showOriginal()
-                        uiStateSuperHeroeDetail.superHero?.let {
-                            bindData(it)
-                        }
+                    uiStateSuperHeroeDetail.superHero?.let {
+                        bindData(it)
                     }
                 }
             }
@@ -139,14 +130,6 @@ class SuperHeroFragmentDetail : Fragment() {
             textIntelligenceValue.text = heroDetail.intelligence.toString()
             textCombatValue.text = heroDetail.combat.toString()
             textSpeedValue.text = heroDetail.speed.toString()
-            listImages.adapter = superHeroDetailAdapter
-            listImages.layoutManager =
-                LinearLayoutManager(
-                    requireContext(),
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-
             superHeroDetailAdapter.setDataItems(heroDetail.images)
         }
     }

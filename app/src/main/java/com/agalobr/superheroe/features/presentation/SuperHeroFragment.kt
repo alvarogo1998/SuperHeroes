@@ -34,7 +34,7 @@ import com.faltenreich.skeletonlayout.applySkeleton
 class SuperHeroFragment : Fragment() {
 
     private var _binding: FragmentSuperheroFeedBinding? = null
-    private val binding = _binding!!
+    private val binding get() = _binding!!
 
     private val skeleton: Skeleton by lazy {
         binding.listSuperHeroe.applySkeleton(R.layout.view_superhero_feed_item, 10)

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.agalobr.superheroe.app.error.ErrorApp
 import com.agalobr.superheroe.features.domain.SuperHeroesFeedUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SuperHeroFeedViewModel(private val superheroFeedUseCase: SuperHeroesFeedUseCase) :
@@ -21,7 +20,6 @@ class SuperHeroFeedViewModel(private val superheroFeedUseCase: SuperHeroesFeedUs
             UiState(isLoading = true)
         )
         viewModelScope.launch(Dispatchers.IO) {
-            delay(5000)
             superheroFeedUseCase.invoke().fold(
                 { responseError(it) },
                 { responseLoadSuperHeroSuccess() }
