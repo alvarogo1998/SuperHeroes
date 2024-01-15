@@ -43,9 +43,9 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
     //Retrofit
     val retrofitVersion = "2.9.0"
@@ -59,9 +59,9 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
 
     // Livecycle: ViewModel
-    val lifecycleVersion = "2.6.2"
+    val lifecycleVersion = "2.7.0"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.activity:activity-ktx:1.8.0")
+    implementation("androidx.activity:activity-ktx:1.8.2")
 
     //Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
