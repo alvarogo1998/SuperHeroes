@@ -33,6 +33,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -41,7 +45,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 
     //Retrofit
     val retrofit_version = "2.9.0"
@@ -50,6 +54,20 @@ dependencies {
 
     //Gson
     implementation("com.google.code.gson:gson:2.10.1")
+
+    //CardView
+    implementation("androidx.cardview:cardview:1.0.0")
+
+    // Livecycle: ViewModel
+    val lifecycleVersion = "2.6.2"
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.activity:activity-ktx:1.8.0")
+
+    //Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    //Skeleton
+    implementation("com.faltenreich:skeletonlayout:5.0.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
