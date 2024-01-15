@@ -11,6 +11,12 @@ class SuperHeroeFeedAdapter:
 
     private val listSuperHeroes: MutableList<SuperHeroesFeedUseCase.SuperHeroeList> = mutableListOf ()
 
+    private var onClickDetail: ((Int) -> Unit)? = null
+
+    fun setOnClickDetail(onClickDetail: ((Int) -> Unit)){
+        this.onClickDetail = onClickDetail
+    }
+
     fun setDataItems(superHero: List<SuperHeroesFeedUseCase.SuperHeroeList>){
         listSuperHeroes.clear()
         listSuperHeroes.addAll(superHero)
@@ -27,5 +33,5 @@ class SuperHeroeFeedAdapter:
     override fun getItemCount(): Int = listSuperHeroes.size
 
     override fun onBindViewHolder(holder: SuperHeroFeedViewHolder, position: Int) =
-        holder.bind(listSuperHeroes[position])
+        holder.bind(listSuperHeroes[position],onClickDetail)
 }

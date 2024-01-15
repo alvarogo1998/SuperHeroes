@@ -5,4 +5,6 @@
     <dimen name="name_Text">25sp</dimen>
     <dimen name="fullName_Text">15sp</dimen>
     <dimen name="card_Radius">6dp</dimen>
+    <dimen name="image_detail">300dp</dimen>
+    <dimen name="list_image_detail">120dp</dimen>
 </resources>

@@ -3,4 +3,9 @@
     <string name="text_superhero_name">Spider-Man</string>
     <string name="text_biography_fullName">Peter Parker</string>
     <string name="text_work_occupation">Freellance, photographer, teacher</string>
+    <string name="text_alignment">Good</string>
+    <string name="text_intelligence">Intelligence</string>
+    <string name="text_speed">Speed</string>
+    <string name="text_combat">Combat</string>
+    <string name="text_powerstats">10</string>
 </resources>
