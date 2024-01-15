@@ -6,4 +6,6 @@ import com.agalobr.superheroe.features.domain.SuperHeroe
 
 interface SuperHeroeRemoteDataRepository {
     suspend fun getSuperHeroe(): Either<ErrorApp, List<SuperHeroe>>
+
+    suspend fun getSuperHeroById(heroId: Int): Either<ErrorApp, SuperHeroe>
 }
